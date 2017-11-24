@@ -6,4 +6,4 @@ Integrantes:
               * Luis Fernando Hernández Morales >> 163189
 
 Contacto: playeando.97@gmail.com
-# Universidad Politécnica de Chiapas - Ingeniería en Desarrollo de Software - 4º Cuatrimestre
+Universidad Politécnica de Chiapas - Ingeniería en Desarrollo de Software - 4º Cuatrimestre
