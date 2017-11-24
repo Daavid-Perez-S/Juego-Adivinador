@@ -1,10 +1,6 @@
-import java.io.BufferedReader;
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,33 +29,24 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException, IOException {
           
           int opcionMenu, opcionMenu2;
-          String nombreArchivoDatos= "Datos.txt", texto;
+          String nombreArchivoDatos= "Tree.tree";
           String rutaArchivo= System.getProperty("user.dir") + "\\" + nombreArchivoDatos;
           
           Scanner lecturaTeclado= new Scanner(System.in);
           Arbol arbol= new Arbol();
           Archivo<Arbol> archivo= new Archivo<>(nombreArchivoDatos);
           
-          archivo.crearArchivoVacio();
           File file = new File(rutaArchivo);
-          BufferedReader bufer = new BufferedReader(new FileReader(file));
-          System.out.println("Leido: "+ bufer.readLine());
-          System.out.println("Existe: "+ file.exists());
-          System.out.println("Es archivo: "+ file.isFile());
-                    
-          if(file.exists() && file.isFile() && false){
-                archivo.serializar(arbol);
-                  //CopiarArchivo copy = new CopiarArchivo(System.getProperty("user.dir") + "\\Datos2.txt",rutaArchivo);
-                  arbol= archivo.deserializar();
-                  System.out.println("Recuperado");
+          if(file.exists()){
+              arbol = archivo.deserializar();
+              System.out.println("Recuperado = " + arbol.toString());
           }else{
-                  arbol.añadirPregunta("¿Es una animal doméstico?");
-                  arbol.añadirRespuesta("Perro");
-                  arbol.añadirRespuesta("Oso");
-                  archivo.crearArchivoVacio();
-                  arbol.inOrder();
+              arbol.añadirPregunta("¿Es una animal doméstico?");
+              arbol.añadirRespuesta("Perro");
+              arbol.añadirRespuesta("Oso");
+              archivo.crearArchivoVacio();
+              archivo.serializar(arbol);
           }
-          System.out.println("Estado Arbol: " +arbol.arbolInicializado());
           
           do{
             System.out.println("\n BIENVENIDO");
@@ -148,8 +135,6 @@ public class Main {
                         break;
                   }
             }
-            
-                        arbol.inOrder();
           }while(opcionMenu<1 || opcionMenu >2);
     }
 }

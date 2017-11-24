@@ -48,12 +48,14 @@ public class Archivo <T> {
        */
       public boolean crearArchivoVacio(boolean sobreEscribirDatos){
             boolean bandera= true;
+            FileOutputStream tmp = null;
             try{
-                  fo = new FileOutputStream(nombreArchivo, sobreEscribirDatos);
+                  tmp = new FileOutputStream(nombreArchivo, sobreEscribirDatos);
             }catch(FileNotFoundException e){
                   bandera= false;
                   System.err.println("\t[ No se pudo crear el archivo ]");
             }
+            fo = tmp;
             return bandera;
       }
       /**
@@ -61,13 +63,18 @@ public class Archivo <T> {
        * <p>Serializa o guarda un objeto de tipo <code>T</code>, el cuál se almacenará el el archivo creado previamente.</p>
        * @param objeto Objeto de tipo <code>T</code> que vamos a serializar (guardar) en el archivo creado previamente.
        * @return Retorna TRUE si el objeto pudo ser serializado, y FALSE en caso contrario.
+       * @throws java.io.FileNotFoundException
        */
-      public boolean serializar(T objeto){
+      public boolean serializar(T objeto) throws FileNotFoundException{
             boolean bandera= true;
+            if(fo == null){
+                fo = new FileOutputStream(nombreArchivo, false);
+            }
             try{
                   ObjectOutputStream oos = new ObjectOutputStream(fo);
                         oos.writeObject(objeto);
                         oos.flush();
+                        oos.close();
             }catch (IOException e){
                   // write stack trace to standard error
                   System.err.println("\t[ El objeto no se pudo guardar ]");
