@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLGUIPreguntasController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="14.0" text="Tiempo Transcurrido">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelTiempo" alignment="CENTER" contentDisplay="CENTER" layoutX="211.0" layoutY="56.0" prefHeight="21.0" prefWidth="180.0" text="[ Tiempo ]" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelPregunta" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="138.0" prefHeight="45.0" prefWidth="600.0" text="[ Pregunta ]" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Button layoutX="80.0" layoutY="302.0" mnemonicParsing="false" onAction="#respuestaSi" prefHeight="50.0" prefWidth="100.0" text="Sí">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="430.0" layoutY="303.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="No">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="251.0" layoutY="302.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="No sé">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

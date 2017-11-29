@@ -1,81 +1,67 @@
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /*
  *  Creado por: David Pérez Sánchez
  *  Matrícula: 163202
- *  Materia: Estructura de Datos
+ *  Materia: 
  *  Universidad Politécnica de Chiapas.
- *  Fecha de Creación: 20/11/2017
+ *  Fecha de Creación: /10/2017
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
- * Clase principal del proyecto.
+ *
  * @author David Pérez S.
  */
-public class Main {
+public class Main extends Application {
+      
+      @Override
+      public void start(Stage stage) throws Exception {
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIPreguntas.fxml"));
+            
+            Scene scene = new Scene(root);
+            
+            stage.setScene(scene);
+            stage.show();
+      }
+
       /**
-       * Método principal del proyecto.
-       * @param args Array de líneas de argumentos
+       * @param args the command line arguments
        * @throws java.io.FileNotFoundException Excepción creada cuando el archivo no existe o no se puede leer.
        */
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-          
-          int opcionMenu, opcionMenu2;
+      public static void main(String[] args) throws FileNotFoundException, IOException {
+            launch(args);
+            
+            ////////////////////////
           String nombreArchivoDatos= "Tree.tree";
           String rutaArchivo= System.getProperty("user.dir") + "\\" + nombreArchivoDatos;
           
-          Scanner lecturaTeclado= new Scanner(System.in);
           Arbol arbol= new Arbol();
           Archivo<Arbol> archivo= new Archivo<>(nombreArchivoDatos);
           
           File file = new File(rutaArchivo);
           if(file.exists()){
               arbol = archivo.deserializar();
-              System.out.println("Recuperado = " + arbol.toString());
+              arbol.preOrder();
           }else{
-              arbol.añadirPregunta("¿Es una animal doméstico?");
-              arbol.añadirRespuesta("Perro");
-              arbol.añadirRespuesta("Oso");
-              archivo.crearArchivoVacio();
-              archivo.serializar(arbol);
+                  arbol.añadirPregunta("¿Es una animal doméstico?");
+                  arbol.añadirRespuesta("Perro");
+                  arbol.añadirRespuesta("Oso");
+                  archivo.crearArchivoVacio();
+                  archivo.serializar(arbol);
           }
-          
-          do{
-            System.out.println("\n BIENVENIDO");
-            System.out.println(" **************************************************");
-            System.out.println(" [ 1 ]  Jugar");
-            System.out.println(" [ 2 ] Salir");
-            System.out.print("\n Elija>> ");
-            opcionMenu= lecturaTeclado.nextInt();
-            System.out.println(" **************************************************\n");
-            switch(opcionMenu){
-                  case 1:{
-                        do{
-                              juego(arbol.recorrerAdivinador(), arbol);
-                              System.out.println("\n Desea volver a jugar ??");
-                              System.out.println(" [ 1 ]  Volver a jugar");
-                              System.out.println(" [ 2 ] Salir");
-                              System.out.print("\n Elija>> ");
-                              opcionMenu2= lecturaTeclado.nextInt();
-                              arbol.resetTemporalRecorrido();
-                        }while(opcionMenu2 != 2);
-                        break;
-                  }
-                  case 2: break;
-            }
-          }while(opcionMenu <1 || opcionMenu >2);
-     archivo.serializar(arbol);
-     CopiarArchivo copy = new CopiarArchivo(rutaArchivo, System.getProperty("user.dir") + "\\Datos2.txt");
-    }
-    /**
+          //juego(arbol.recorrerAdivinador(), arbol);
+          archivo.serializar(arbol);
+      }
+      
+          /**
      * Iniciar el juego >> Adivinador.
      * <p>Esta función contiene la mayor parte de la ejecucuón del juego principal</p>
      * @param nodo Nodo inicial, o sea, la raíz, para comenzar el programa.
@@ -138,43 +124,3 @@ public class Main {
           }while(opcionMenu<1 || opcionMenu >2);
     }
 }
-
-class CopiarArchivo {
-
-        static final Logger LOGGER = Logger.getAnonymousLogger();
-
-        public CopiarArchivo(String origenArchivo, String destinoArchivo) {
-            try {
-                Path origenPath = Paths.get(origenArchivo);
-                Path destinoPath = Paths.get(destinoArchivo);
-                //sobreescribir el fichero de destino si existe y lo copia
-                Files.copy(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Copiado exitoso");
-            } catch (FileNotFoundException ex) {
-                LOGGER.log(Level.SEVERE, ex.getMessage());
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, ex.getMessage());
-            }
-        }
-    }
-/*
-Cambiar de STAGE
-
-//Creas el nuevo stage que se mostrará al usuario
-Stage nuevo = new Stage();
-
-//Creas una instancia de Stage la cual vincularás al stage en el que te encuentras
-Stage atual = new Stage();
-
-//Agarras un ELEMENTO de tu fxml que tengas declarado
-//Supongamos que es un botón
-
-actual = (Stage) boton.getScene().getWindow();
-
-//Luego haces todo eso del FXMLLoader
-
-y cuando lo vayas a mostrar...
-
-nuevo.show();
-actual.close();
-*/

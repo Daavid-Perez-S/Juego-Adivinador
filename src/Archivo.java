@@ -55,7 +55,7 @@ public class Archivo <T> {
                   bandera= false;
                   System.err.println("\t[ No se pudo crear el archivo ]");
             }
-            fo = tmp;
+            fo= tmp;
             return bandera;
       }
       /**
@@ -66,7 +66,9 @@ public class Archivo <T> {
        * @throws java.io.FileNotFoundException
        */
       public boolean serializar(T objeto) throws FileNotFoundException{
+            
             boolean bandera= true;
+            
             if(fo == null){
                 fo = new FileOutputStream(nombreArchivo, false);
             }
