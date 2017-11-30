@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -34,9 +35,13 @@ public class Hilo extends Thread implements Runnable{
       public void run() {
             for(int i=0; i<60; i++){
                   for(int j=0; j<60; j++){
-                        tiempo= i + " minutos y " + j + " segundos";
-                        System.out.println(tiempo);
-                        labelTime.setText(tiempo);
+                        tiempo= i + " : " + j;
+                        Platform.runLater(new Runnable(){
+                                  @Override
+                                  public void run() {
+                                      labelTime.setText(tiempo);
+                                  }
+                              });
                         try {
                               Thread.sleep(1000);
                         } catch (InterruptedException ex) {System.err.println("\t[ Error en el Thread.sleep() ]");}
