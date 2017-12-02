@@ -1,6 +1,6 @@
 /*
- *  Creado por: David Pérez Sánchez
- *  Matrícula: 163202
+ *  Creado por: David Pérez Sánchez & Luis Fernando Hernández Morales
+ *  Matrícula: 163202, 163189
  *  Materia: 
  *  Universidad Politécnica de Chiapas.
  *  Fecha de Creación: /10/2017
@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,19 +42,18 @@ public class FXMLGUIPreguntasController implements Initializable {
       
       @FXML
       private Button botonNoSe;
-      
-      Stage stage;
-      
+       
       private Arbol arbol;
       private Nodo nodo;
       private boolean firstTime;
       
       
       private void respuestaSi() throws IOException {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIRespuestas.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIRespuestas.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
       }
       
       @Override
@@ -102,15 +100,33 @@ public class FXMLGUIPreguntasController implements Initializable {
           }                  
       }
 
-      private void si(){
-          nodo = arbol.recorrerAdivinador(1);
-          System.out.println("Nodo = " + nodo.getTexto());
-          mostrarPregunta();
+      private void si() throws IOException{
+          if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
+            //Si el nodo es una hoja
+            //Y el usuario si pensó en este animal, entonces mostrará
+            //Una ventana que diga "Te lo adivine :v"
+              System.out.println("Te lo adivine prro");
+          }else{
+            nodo = arbol.recorrerAdivinador(1);   
+            mostrarPregunta();
+          }
       }
       
-      private void no(){
-          nodo = arbol.recorrerAdivinador(-1);
-          mostrarPregunta();
+      private void no() throws IOException{
+          if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
+            //Si el nodo es una hoja
+            //Y el usuario no pensó en este animal, entonces mostrará
+            //Una ventana para que agregue al animal
+          System.out.println("No lo adivine :c");
+          Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLGUINuevoNodo.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+          }else{
+            nodo = arbol.recorrerAdivinador(-1);   
+            mostrarPregunta();
+          }
       }
       
       private void dunno(){
@@ -125,11 +141,9 @@ public class FXMLGUIPreguntasController implements Initializable {
             labelPregunta.setText(nodo.getTexto());
             firstTime = false;
           }else{
-            labelPregunta.setText("Estás pensando en un(a) " + nodo.getTexto() + "?");   
+            labelPregunta.setText("Estás pensando en un(a) " + nodo.getTexto() + "?");
+            firstTime = true;
           }
-          /*if(nodo.getDerecho() != null && nodo.getIzquierdo() != null){
-            System.out.println("Entra");
-          }*/
       }
       
       private void disableButtons(boolean b){
@@ -140,25 +154,16 @@ public class FXMLGUIPreguntasController implements Initializable {
       
       @FXML
       private void responderSi_PasaNodo(ActionEvent event) throws IOException {
-          //Validar que sea una hoja
-          if(nodo.getDerecho() == null && nodo.getIzquierdo() == null){
-            respuestaSi();
-              System.out.println("No adivino");
-          }else{
-            si();   
-            System.out.println("Nodo = " + nodo.getTexto());
-          }
+        si();
       }
       
       @FXML
-      private void responderNo_PasaNodo(ActionEvent event) {
-            no();
-            System.out.println("Nodo = " + nodo.getTexto());
+      private void responderNo_PasaNodo(ActionEvent event) throws IOException {
+        no();
       }
       
       @FXML
       private void responderNoSe_PasaNodo(ActionEvent event) {
-            dunno();
-            System.out.println("Nodo = " + nodo.getTexto());
+        dunno();
       }
 }
