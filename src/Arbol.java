@@ -121,7 +121,6 @@ public class Arbol implements Serializable {
        * @return Retorna true si la respuesta pudo ser introducida correctamente al árbol, FALSE en caso contrario.
        */
       public boolean añadirRespuesta(String valor){         // Las respuestas siempre se añaden del lado izquierdo del nodo
-            
             boolean bandera= true;
             try{
                   if(raiz == null){

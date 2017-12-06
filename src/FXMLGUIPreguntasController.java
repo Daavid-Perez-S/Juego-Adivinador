@@ -49,8 +49,12 @@ public class FXMLGUIPreguntasController implements Initializable {
       
       
       private void respuestaSi() throws IOException {
+        Archivo<Nodo> respaldoDelNodo = new Archivo("Node.nd");
+        respaldoDelNodo.crearArchivoVacio();
+        respaldoDelNodo.serializar(nodo);
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIRespuestas.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUIRespuestas.fxml"));
+        Parent root = (Parent) loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -101,10 +105,12 @@ public class FXMLGUIPreguntasController implements Initializable {
       }
 
       private void si() throws IOException{
+          botonNoSe.setDisable(false);
           if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
             //Si el nodo es una hoja
             //Y el usuario si pensó en este animal, entonces mostrará
             //Una ventana que diga "Te lo adivine :v"
+              respuestaSi();
               System.out.println("Te lo adivine prro");
           }else{
             nodo = arbol.recorrerAdivinador(1);   
@@ -113,12 +119,16 @@ public class FXMLGUIPreguntasController implements Initializable {
       }
       
       private void no() throws IOException{
+          botonNoSe.setDisable(false);
           if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
             //Si el nodo es una hoja
             //Y el usuario no pensó en este animal, entonces mostrará
             //Una ventana para que agregue al animal
-          System.out.println("No lo adivine :c");
-          Stage stage = new Stage();
+            Archivo<Nodo> respaldoDelNodo = new Archivo("Node.nd");
+            respaldoDelNodo.crearArchivoVacio();
+            respaldoDelNodo.serializar(nodo);
+            System.out.println("No lo adivine :c");
+            Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("FXMLGUINuevoNodo.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -131,6 +141,7 @@ public class FXMLGUIPreguntasController implements Initializable {
       
       private void dunno(){
           nodo = arbol.recorrerAdivinador(0);
+          botonNoSe.setDisable(true);
           mostrarPregunta();
       }
       
@@ -141,7 +152,11 @@ public class FXMLGUIPreguntasController implements Initializable {
             labelPregunta.setText(nodo.getTexto());
             firstTime = false;
           }else{
-            labelPregunta.setText("Estás pensando en un(a) " + nodo.getTexto() + "?");
+              if(getGeneroXD(nodo.getTexto())){
+                labelPregunta.setText("Estás pensando en un " + nodo.getTexto() + "?");
+              }else{
+                labelPregunta.setText("Estás pensando en una " + nodo.getTexto() + "?");  
+              }
             firstTime = true;
           }
       }
@@ -165,5 +180,18 @@ public class FXMLGUIPreguntasController implements Initializable {
       @FXML
       private void responderNoSe_PasaNodo(ActionEvent event) {
         dunno();
+      }
+      
+      private boolean getGeneroXD(String str){
+          boolean macho = true;
+          char last = 'z';
+          for(int i = 0; i < str.length(); i++){
+              last = str.charAt(i);
+          }
+          
+          if(last == 'a'){
+              macho = false;
+          }
+          return macho;
       }
 }
