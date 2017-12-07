@@ -102,6 +102,7 @@ public class FXMLGUIPreguntasController implements Initializable {
                   }
               }
               //juego(arbol.recorrerAdivinador(), arbol);
+              arbol.resetTemporalRecorrido();
               archivo.serializar(arbol);
               
               //Hilo hilo = new Hilo("SSSS",labelTiempo);

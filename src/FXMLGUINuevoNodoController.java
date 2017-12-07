@@ -140,6 +140,7 @@ public class FXMLGUINuevoNodoController implements Initializable {
             System.out.println("Nuevo texto = " + str);
             arbol.añadirRespuesta(str, rutaImagen);
             Stage thisStage = (Stage) guardar.getScene().getWindow();
+            arbol.resetTemporalRecorrido();
             archivo.serializar(arbol);
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
             alert2.setTitle("Adivinador");
