@@ -22,14 +22,21 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
       
+      private static Stage stagee;
+      
       @Override
       public void start(Stage stage) throws Exception {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIPreguntas.fxml"));
-            
-            Scene scene = new Scene(root);
-            
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIBienvenida.fxml"));
+            Scene scene = new Scene(root); 
             stage.setScene(scene);
+            setStage(stage);
             stage.show();
+      }
+      public static void closeStage(){
+            stagee.close();
+      }
+      public void setStage(Stage stage){
+            this.stagee= stage;
       }
 
       /**
@@ -38,27 +45,6 @@ public class Main extends Application {
        */
       public static void main(String[] args) throws FileNotFoundException, IOException {
             launch(args);
-            
-            ////////////////////////
-          String nombreArchivoDatos= "Tree.tree";
-          String rutaArchivo= System.getProperty("user.dir") + "\\" + nombreArchivoDatos;
-          
-          Arbol arbol= new Arbol();
-          Archivo<Arbol> archivo= new Archivo<>(nombreArchivoDatos);
-          
-          File file = new File(rutaArchivo);
-          if(file.exists()){
-              arbol = archivo.deserializar();
-              arbol.preOrder();
-          }else{
-                  arbol.añadirPregunta("¿Es una animal doméstico?");
-                  arbol.añadirRespuesta("Perro");
-                  arbol.añadirRespuesta("Oso");
-                  archivo.crearArchivoVacio();
-                  archivo.serializar(arbol);
-          }
-          //juego(arbol.recorrerAdivinador(), arbol);
-          archivo.serializar(arbol);
       }
       
           /**
@@ -117,7 +103,7 @@ public class Main extends Application {
                         System.out.print(" Ingrese una característica verdadera para un(a) " + nodo.getTexto().toUpperCase()+ ", pero falsa para un " + respuestaUsuario.toUpperCase() + ": ");
                         preguntaUsuario= lecturaTeclado.nextLine();
                         arbol.añadirPregunta("¿" + preguntaUsuario + "?");
-                        arbol.añadirRespuesta(respuestaUsuario);
+                        arbol.añadirRespuesta(respuestaUsuario,"");
                         break;
                   }
             }
