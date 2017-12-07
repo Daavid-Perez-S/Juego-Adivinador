@@ -40,10 +40,6 @@ public class FXMLGUIBienvenidaController implements Initializable {
             imagenPresentacion.setImage(new Image("file:" + System.getProperty("user.dir") + "\\Images\\" + "Guacamaya.png"));
       }
       @FXML
-      public void salir(ActionEvent e){
-            Main.closeStage();
-      }
-      @FXML
       public void jugar(ActionEvent e) throws IOException{
             
           Stage old = (Stage) imagenPresentacion.getScene().getWindow();

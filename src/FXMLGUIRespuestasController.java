@@ -40,6 +40,7 @@ public class FXMLGUIRespuestasController implements Initializable {
       private Nodo nodoRespuesta;
       private Arbol arbol;
       private static Stage stagee;
+      private Archivo<Arbol> archivo;
       
       /**
        * Initializes the controller class.
@@ -63,6 +64,10 @@ public class FXMLGUIRespuestasController implements Initializable {
       
       @FXML
       public void si(ActionEvent e) throws IOException{
+            
+            arbol.resetTemporalRecorrido();
+            archivo.serializar(arbol);
+            arbol = archivo.deserializar();
             
           Alert alert = new Alert(Alert.AlertType.INFORMATION);
           alert.setTitle("Adivinador");
@@ -95,6 +100,7 @@ public class FXMLGUIRespuestasController implements Initializable {
           Parent root = (Parent) loader.load();
           FXMLGUINuevoNodoController controller = loader.<FXMLGUINuevoNodoController>getController();
           controller.setArbol(arbol);
+          controller.setArchivo(archivo);
           System.out.println("Ventana Nuevo Nodo OK");
           Scene scene = new Scene(root);
           nuevo.setScene(scene);
@@ -107,5 +113,8 @@ public class FXMLGUIRespuestasController implements Initializable {
       }
       public void setStage(Stage stage){
             this.stagee= stage;
-      }
+      } 
+      public void setArchivo(Archivo archivo){
+          this.archivo= archivo;
+    }
 }

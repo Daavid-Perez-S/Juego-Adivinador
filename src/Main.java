@@ -6,7 +6,6 @@
  *  Fecha de Creación: /10/2017
  */
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -22,21 +21,12 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
       
-      private static Stage stagee;
-      
       @Override
       public void start(Stage stage) throws Exception {
             Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIBienvenida.fxml"));
             Scene scene = new Scene(root); 
             stage.setScene(scene);
-            setStage(stage);
             stage.show();
-      }
-      public static void closeStage(){
-            stagee.close();
-      }
-      public void setStage(Stage stage){
-            this.stagee= stage;
       }
 
       /**
@@ -46,67 +36,4 @@ public class Main extends Application {
       public static void main(String[] args) throws FileNotFoundException, IOException {
             launch(args);
       }
-      
-          /**
-     * Iniciar el juego >> Adivinador.
-     * <p>Esta función contiene la mayor parte de la ejecucuón del juego principal</p>
-     * @param nodo Nodo inicial, o sea, la raíz, para comenzar el programa.
-     * @param arbol Árbol en el cual la función va a ir tomando los diferentes nodos de éste.
-     */
-    public static void juego(Nodo nodo, Arbol arbol){
-          
-          int opcionMenu;
-          String preguntaUsuario, respuestaUsuario;
-          Scanner lecturaTeclado= new Scanner(System.in);
-          while(nodo.getDerecho() != null && nodo.getIzquierdo() != null){
-                do{
-                  System.out.println(nodo.getTexto()+ "\n");
-                  System.out.println(" [ 1 ]  Sí");
-                  System.out.println(" [ 2 ] No");
-                  System.out.println(" [ 3 ] No sé");
-                  System.out.print("\n Elija>> ");
-                  opcionMenu= lecturaTeclado.nextInt();
-                  System.out.println(" -------------------------");
-                  switch(opcionMenu){
-                        case 1:{
-                              nodo= arbol.recorrerAdivinador(1);
-                              break;
-                        }
-                        case 2:{
-                              nodo= arbol.recorrerAdivinador(-1);
-                              break;
-                        }
-                        case 3:{
-                              nodo= arbol.recorrerAdivinador(0);
-                              break;
-                        }
-                  }
-                }while(opcionMenu <1 || opcionMenu >3);
-          }
-          do{
-            System.out.println("\n ¿Es esto lo que estabas pensando?");
-            System.out.println(" " + nodo.getTexto().toUpperCase()+ "\n");
-            System.out.println(" [ 1 ]  Sí");
-            System.out.println(" [ 2 ] No");
-            System.out.print("\n Elija>> ");
-            opcionMenu= lecturaTeclado.nextInt();
-            System.out.println(" -------------------------");
-            lecturaTeclado.nextLine();
-            switch(opcionMenu){
-                  case 1:{
-                        System.out.println(" Felicidades !!\n Gracias por jugar !!");
-                        break;
-                  }
-                  case 2:{
-                        System.out.print(" Ingrese el animal que pensó: ");
-                        respuestaUsuario= lecturaTeclado.nextLine();
-                        System.out.print(" Ingrese una característica verdadera para un(a) " + nodo.getTexto().toUpperCase()+ ", pero falsa para un " + respuestaUsuario.toUpperCase() + ": ");
-                        preguntaUsuario= lecturaTeclado.nextLine();
-                        arbol.añadirPregunta("¿" + preguntaUsuario + "?");
-                        arbol.añadirRespuesta(respuestaUsuario,"");
-                        break;
-                  }
-            }
-          }while(opcionMenu<1 || opcionMenu >2);
-    }
 }

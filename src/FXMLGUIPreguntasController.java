@@ -7,7 +7,6 @@
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +43,9 @@ public class FXMLGUIPreguntasController implements Initializable {
       private Arbol arbol = new Arbol();
       private Nodo nodo = new Nodo();
       private static Stage stagee;
+      private Archivo<Arbol> archivo;
+      private Hilo hilo;
+      private String labelTiempo2;
       
       @Override
       public void initialize(URL url, ResourceBundle rb) {
@@ -53,66 +55,68 @@ public class FXMLGUIPreguntasController implements Initializable {
           String nombreArchivoDatos= "Tree.tree";
           String rutaArchivo= System.getProperty("user.dir") + "\\" + nombreArchivoDatos;
           System.out.println(rutaArchivo);
-          Archivo<Arbol> archivo= new Archivo<>(nombreArchivoDatos);
+          archivo= new Archivo<>(nombreArchivoDatos);
           File file = new File(rutaArchivo);
           if(file.exists()){
                 arbol = archivo.deserializar();
+                System.out.println("Existeee, esto hay: ");
                 arbol.preOrder();
           }else{
-                try {
                       arbol.añadirPregunta("¿Es una animal doméstico?");
                       arbol.añadirRespuesta("Perro", System.getProperty("user.dir") + "\\Images\\" + "Perro.jpg");
                       arbol.añadirRespuesta("Oso", System.getProperty("user.dir") + "\\Images\\" + "Oso.jpg");
                       archivo.crearArchivoVacio();
-                      archivo.serializar(arbol);
-                } catch (FileNotFoundException ex) {
-                      Logger.getLogger(FXMLGUIPreguntasController.class.getName()).log(Level.SEVERE, null, ex);
-                }
           }
-          //Hilo hilo = new Hilo("SSSS",labelTiempo);
-          //hilo.start();
+          hilo = new Hilo("Hilo Tiempo",labelTiempo);
+          hilo.start();
           nodo = arbol.recorrerAdivinador();
           mostrarPregunta();                  
       }
 
       private void si() throws IOException{
-          nodo= nodo.getDerecho();
+            
+          nodo= arbol.recorrerAdivinador(1);
           if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
             //Si el nodo es una hoja
             //Y el usuario si pensó en este animal, entonces se mostrará en una nueva ventana el animal adivinado
             puntosSuspensivos();
           }else{
-            nodo = arbol.recorrerAdivinador(1);   
+            nodo = arbol.recorrerAdivinador(1);
             mostrarPregunta();
           }
       }
       
       private void no() throws IOException{
-          nodo= nodo.getIzquierdo();
+            
+          nodo= arbol.recorrerAdivinador(-1);
           if(nodo.getIzquierdo() == null && nodo.getDerecho() == null){
             //Si el nodo es una hoja
             //Y el usuario no pensó en este animal, entonces mostrará
             //Una ventana para que agregue al animal
               puntosSuspensivos();
           }else{
-            nodo = arbol.recorrerAdivinador(-1);   
+            nodo = arbol.recorrerAdivinador(-1);
             mostrarPregunta();
           }
       }
       
       private void dunno(){
+
           nodo = arbol.recorrerAdivinador(0);
           botonNoSe.setDisable(true);
           mostrarPregunta();
       }
       
       private void mostrarPregunta(){
-          disableButtons(false);
-            labelPregunta.setText(nodo.getTexto());
+          labelPregunta.setText(nodo.getTexto());
       }
       
        private void mostrarRespuesta() throws IOException {
-        
+        Stage este = (Stage) botonSi.getScene().getWindow();
+            
+            este.setOnCloseRequest(event -> {
+                  hilo.interrupt();
+            });
         FXMLGUIBienvenidaController.closeStage();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUIRespuestas.fxml"));
@@ -120,6 +124,7 @@ public class FXMLGUIPreguntasController implements Initializable {
         FXMLGUIRespuestasController controller = loader.<FXMLGUIRespuestasController>getController();
         controller.setNodo(nodo);
         controller.setArbol(arbol);
+        controller.setArchivo(archivo);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         setStage(stage);

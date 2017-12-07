@@ -30,7 +30,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ChoiceBox>
-      <TextField fx:id="caracteristica" layoutX="290.0" layoutY="163.0" prefHeight="25.0" prefWidth="265.0" promptText="Caracteristica del nuevo animal" />
+      <TextField fx:id="caracteristica" layoutX="290.0" layoutY="163.0" prefHeight="25.0" prefWidth="265.0" promptText="Caracteristica FALSA para el nuevo animal" />
       <Label layoutX="42.0" layoutY="220.0" text="Foto: ">
          <font>
             <Font size="15.0" />

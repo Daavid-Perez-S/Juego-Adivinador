@@ -21,15 +21,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="262.0" layoutY="333.0" mnemonicParsing="false" onAction="#jugar" prefWidth="80.0" text="Jugar">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="106.0" layoutY="333.0" mnemonicParsing="false" onAction="#salir" prefWidth="80.0" text="Salir">
+      <Button layoutX="182.0" layoutY="331.0" mnemonicParsing="false" onAction="#jugar" prefWidth="80.0" text="Jugar">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

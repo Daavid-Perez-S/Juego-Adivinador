@@ -310,4 +310,8 @@ public class Arbol implements Serializable {
                   nivelMayor= obtenerNivelRamaDerecha();
             return nivelMayor;
       }
+      
+      public String getTemporalRecorrido(){
+            return temporalRecorrido.getTexto();
+      }
 }

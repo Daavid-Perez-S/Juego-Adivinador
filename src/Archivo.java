@@ -70,13 +70,13 @@ public class Archivo <T> {
             boolean bandera= true;
             
             if(fo == null){
+                  System.out.println("Cree otro archivo");
                 fo = new FileOutputStream(nombreArchivo, false);
             }
             try{
                   ObjectOutputStream oos = new ObjectOutputStream(fo);
                         oos.writeObject(objeto);
                         oos.flush();
-                        oos.close();
             }catch (IOException e){
                   // write stack trace to standard error
                   System.err.println("\t[ El objeto no se pudo guardar ]");
