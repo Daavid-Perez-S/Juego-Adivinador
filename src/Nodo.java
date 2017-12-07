@@ -18,25 +18,36 @@ public class Nodo implements Serializable{
       private Nodo derecho;
       private Nodo izquierdo;
       private String texto;
+      private String rutaImagen;
       /**
        * <b>Constructor de la clase Nodo.</b>
        * @param texto Texto que el nodo va a contener
        */
       public Nodo (String texto){
-            derecho= null;
-            izquierdo= null;
-            padre= null;
-            this.texto= texto;
+        derecho= null;
+        izquierdo= null;
+        padre= null;
+        this.texto= texto;
+        this.rutaImagen = null;
       }
       /**
        * <b>Constructor de la clase Nodo.</b>
        */
        public Nodo (){
-            derecho= null;
-            izquierdo= null;
-            padre= null;
-            texto= null;
+        derecho= null;
+        izquierdo= null;
+        padre= null;
+        texto= null;
+        this.rutaImagen = null;
       }
+       
+       public Nodo(String texto, String ruta){
+        derecho = null;
+        izquierdo = null;
+        padre = null;
+        this.texto = texto;
+        this.rutaImagen = ruta;
+       }
        /**
         * <b>Obtener texto del nodo.</b>
         * @return Retorna la cadena de texto que contenga el nodo.
@@ -93,6 +104,14 @@ public class Nodo implements Serializable{
       public void setIzquierdo(Nodo izquierdo){
             this.izquierdo= izquierdo;
       }
+      
+      /**<b>Obtener la imagen del nodo.</b>
+       * @return Retorna una cadena de texto del con la ruta de su respectiva imagen
+       */
+      public String getImagen(){
+          return this.rutaImagen;
+      }
+      
       /**<b>Obtener cadena de texto.</b>
        * <p>Método sobreescirto del Método "toString()" de Java.</p>
        * @return Retorna una cadena de texto del nodo actual

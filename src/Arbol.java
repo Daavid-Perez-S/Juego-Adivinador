@@ -21,6 +21,8 @@ public class Arbol implements Serializable {
       private int nivel;
       private boolean ramaIzquierdaDerecha;
       private boolean arbolInicializado;
+      private int nivelRamaIzquierda;
+      private int nivelRamaDerecha;
       /**
        * <b>Constructor de la clase Arbol.</b>
        */
@@ -31,6 +33,8 @@ public class Arbol implements Serializable {
             temporalRespuesta= raiz;
             nivel= 0;
             arbolInicializado= false;
+            nivelRamaDerecha= 0;
+            nivelRamaIzquierda= 0;
       }
       /**
        * <b>Recorrer árbol adivinador.</b>
@@ -94,6 +98,8 @@ public class Arbol implements Serializable {
                   if(raiz == null){
                         raiz= n;
                         temporalRespuesta= raiz;
+                        nivelRamaDerecha++;
+                        nivelRamaIzquierda++;
                   }else{
                         Nodo temporal= temporalRecorrido.getPadre();
                         n.setDerecho(temporalRecorrido);
@@ -102,8 +108,10 @@ public class Arbol implements Serializable {
                         temporalRespuesta= temporalRecorrido;
                         if(ramaIzquierdaDerecha == true){
                               temporal.setDerecho(n);
+                              nivelRamaDerecha++;
                         }else{
                               temporal.setIzquierdo(n);
+                              nivelRamaIzquierda++;
                         }
                         n.setPadre(temporal);
                   }
@@ -118,16 +126,16 @@ public class Arbol implements Serializable {
        * <b>Inserta un nodo respuesta en el árbol actual.</b>
        * <p> Las respuestas siempre de introducirán del lado IZQUIERDO del nodo pregunta en el que estemos actualmente.</p>
        * @param valor Cadena de texto a introducir.
+       * @param ruta Ruta de la imágen que el nodo contendrá
        * @return Retorna true si la respuesta pudo ser introducida correctamente al árbol, FALSE en caso contrario.
        */
-      public boolean añadirRespuesta(String valor){         // Las respuestas siempre se añaden del lado izquierdo del nodo
-            
+      public boolean añadirRespuesta(String valor, String ruta){         // Las respuestas siempre se añaden del lado izquierdo del nodo
             boolean bandera= true;
             try{
                   if(raiz == null){
                         System.err.println("\t[ Cree primero una pregunta ]");
                   }else{
-                        Nodo nuevo= new Nodo(valor);
+                        Nodo nuevo= new Nodo(valor,ruta);
                         if(temporalRespuesta.getDerecho() == null)
                               temporalRespuesta.setDerecho(nuevo);
                         else
@@ -269,5 +277,41 @@ public class Arbol implements Serializable {
        */
       public boolean arbolInicializado(){
             return arbolInicializado;
+      }
+            /**
+       * <b>Obtener Nivel de Rama Izquierda.</b>
+       * @return Retorna el número de niveles de la Rama Izquierda del Árbol actual.
+       */
+      public int obtenerNivelRamaIzquierda(){
+            
+            return nivelRamaIzquierda;
+      }
+      /**
+       * <b>Obtener Nivel de Rama Derecha.</b>
+       * @return Retorna el número de niveles de la Rama Derecha del Árbol actual.
+       */
+      public int obtenerNivelRamaDerecha(){
+            
+            return nivelRamaDerecha;
+      }
+      /**
+       * <b>Obtener el nivel del Árbol actual.</b>
+       * <p>No importa si la rama izquierda o la derecha es más grande que la otra, siempre retornará la más grande.</p>
+       * @return Retorna el nivel nivel más grande de niveles que tiene el árbol.
+       */
+      public int obtenerNivelArbol(){
+            
+            int nivelMayor;
+            
+            if(obtenerNivelRamaIzquierda() > obtenerNivelRamaDerecha()){
+                  nivelMayor= obtenerNivelRamaIzquierda();
+                  return nivelMayor;
+            }else
+                  nivelMayor= obtenerNivelRamaDerecha();
+            return nivelMayor;
+      }
+      
+      public String getTemporalRecorrido(){
+            return temporalRecorrido.getTexto();
       }
 }
