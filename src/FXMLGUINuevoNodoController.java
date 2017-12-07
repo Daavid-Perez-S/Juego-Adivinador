@@ -8,10 +8,12 @@
  */
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -53,11 +55,16 @@ public class FXMLGUINuevoNodoController implements Initializable {
     
     private ObservableList<String> arrayDeCaracteristicas;
     private String rutaImagen;
+    private Arbol arbol;
+    private Arbol arboltmp;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Archivo<Nodo> nodo = new Archivo<>("Node.nd");
-        Nodo tmp = nodo.deserializar();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Guía rápida");
+        alert.setHeaderText("Parece que no lo he podido adivinar...\nPregúntale a tus amiguitas  :)");
+        alert.setContentText("Agrega el animal que pensaste, recuerda agregar una caracteristica que no pueda hacer el animal que pensaste");
+        alert.showAndWait();
         arrayDeCaracteristicas = FXCollections.observableArrayList();
         arrayDeCaracteristicas.add("Tiene ");
         arrayDeCaracteristicas.add("Es ");
@@ -72,13 +79,6 @@ public class FXMLGUINuevoNodoController implements Initializable {
         abrirVentana.setDisable(true);
         guardar.setDisable(true);
         
-        if(tmp != null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Guía rápida");
-            alert.setHeaderText("Parece que no lo he podido adivinar...\nPregúntale a tus amiguitas  :)");
-            alert.setContentText("Agrega el animal que pensaste, recuerda agregar una caracteristica verdadera para un(a) " + tmp.getTexto() + " pero falsa para el animal que pensaste :)");
-            alert.showAndWait();   
-        }
         nombreNuevo.textProperty().addListener((observable,oldvalue,newvalue) -> {
             if(!nombreNuevo.getText().isEmpty()){
                 stringCaracteristcas.setDisable(false);
@@ -117,16 +117,35 @@ public class FXMLGUINuevoNodoController implements Initializable {
                 guardar.setDisable(true);
             }
         });
-        
-        
-        guardar.setOnAction(event -> {
+    }    
+    
+    public void setArbol(Arbol a){
+        this.arboltmp = a;
+        this.arbol = a;        
+    }
+    
+    private Arbol getArbol(){
+        return arboltmp;
+    }
+    
+    @FXML
+    private void save(ActionEvent e) throws FileNotFoundException{
+        Archivo<Arbol> archivo = new Archivo<>("Tree.tree");
+        if (arbol == null) {
+            System.out.println("Arbol nulo :c");
+        } else {
+            System.out.println("Arbol no nulo :v");
+            arbol.añadirPregunta(nombreNuevo.getText().toLowerCase());
+            String str = (String) stringCaracteristcas.getSelectionModel().getSelectedItem() + " " + caracteristica.getText();
+            System.out.println("Nuevo texto = " + str);
+            arbol.añadirRespuesta(str, rutaImagen);
+            Stage thisStage = (Stage) guardar.getScene().getWindow();
+            archivo.serializar(arbol);
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
             alert2.setTitle("Adivinador");
             alert2.setContentText("Se ha guardado el nuevo animal ;D\n\nGracias por jugar!");
             alert2.showAndWait();
-            Stage thisStage = (Stage) guardar.getScene().getWindow();
             thisStage.close();
-        });
-    }    
-    
+        }
+    }
 }

@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -42,13 +43,23 @@ public class FXMLGUIPreguntasController implements Initializable {
       
       @FXML
       private Button botonNoSe;
+      
        
       private Arbol arbol;
       private Nodo nodo;
-      private boolean firstTime;
-      
+      private boolean firstTime;      
       
       private void respuestaSi() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUIRespuestas.fxml"));
+        Parent root = (Parent) loader.load();
+        FXMLGUIRespuestasController controller = loader.<FXMLGUIRespuestasController>getController();
+        controller.setNodo(nodo);
+        controller.setArbol(arbol);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        /*
         Archivo<Nodo> respaldoDelNodo = new Archivo("Node.nd");
         respaldoDelNodo.crearArchivoVacio();
         respaldoDelNodo.serializar(nodo);
@@ -58,10 +69,12 @@ public class FXMLGUIPreguntasController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        */
       }
       
       @Override
       public void initialize(URL url, ResourceBundle rb) {
+          System.out.println("Inicia");
           firstTime = true;
           disableButtons(true);
           try {
@@ -69,6 +82,7 @@ public class FXMLGUIPreguntasController implements Initializable {
               String nombreArchivoDatos= "Tree.tree";
               String rutaArchivo= System.getProperty("user.dir") + "\\" + nombreArchivoDatos;
               
+              System.out.println(rutaArchivo);
               arbol = new Arbol();
               Archivo<Arbol> archivo= new Archivo<>(nombreArchivoDatos);
               
@@ -79,8 +93,8 @@ public class FXMLGUIPreguntasController implements Initializable {
               }else{
                   try {
                       arbol.añadirPregunta("¿Es una animal doméstico?");
-                      arbol.añadirRespuesta("Perro");
-                      arbol.añadirRespuesta("Oso");
+                      arbol.añadirRespuesta("Perro","");
+                      arbol.añadirRespuesta("Oso","");
                       archivo.crearArchivoVacio();
                       archivo.serializar(arbol);
                   } catch (FileNotFoundException ex) {
@@ -124,15 +138,21 @@ public class FXMLGUIPreguntasController implements Initializable {
             //Si el nodo es una hoja
             //Y el usuario no pensó en este animal, entonces mostrará
             //Una ventana para que agregue al animal
-            Archivo<Nodo> respaldoDelNodo = new Archivo("Node.nd");
-            respaldoDelNodo.crearArchivoVacio();
-            respaldoDelNodo.serializar(nodo);
-            System.out.println("No lo adivine :c");
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLGUINuevoNodo.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+              alert.setTitle("Adivinador");
+              alert.setContentText("Oh, estuve muy cerca!\nAgrega el animal que pensaste...");
+              alert.showAndWait();
+              Stage old = (Stage) botonSi.getScene().getWindow();
+              Stage nuevo = new Stage();
+              FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUINuevoNodo.fxml"));
+              Parent root = (Parent) loader.load();
+              FXMLGUINuevoNodoController controller = loader.<FXMLGUINuevoNodoController>getController();
+              controller.setArbol(arbol);
+              System.out.println("ok");
+              Scene scene = new Scene(root);
+              nuevo.setScene(scene);
+              old.close();
+              nuevo.show();
           }else{
             nodo = arbol.recorrerAdivinador(-1);   
             mostrarPregunta();

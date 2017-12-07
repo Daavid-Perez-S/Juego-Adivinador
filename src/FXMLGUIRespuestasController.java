@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +42,7 @@ public class FXMLGUIRespuestasController implements Initializable {
       private Button no;
       
       private Nodo nodoRespuesta;
+      private Arbol arbol;
       
       /**
        * Initializes the controller class.
@@ -49,36 +51,43 @@ public class FXMLGUIRespuestasController implements Initializable {
        */
       @Override
       public void initialize(URL url, ResourceBundle rb) {
-          Archivo<Nodo> recuperarNodo = new Archivo<>("Node.nd");
-          nodoRespuesta = recuperarNodo.deserializar();
-        if(nodoRespuesta == null){
-            labelTituloImagen.setText("Algo salio mal :c");
-        }else{
-            labelTituloImagen.setText("Pensaste en un(a)" + nodoRespuesta.getTexto());
-            imageArea.setImage(new Image(nodoRespuesta.getImagen()));
-          }
         
-        si.setOnAction(event ->{
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("Adivinador");
-            alert2.setContentText("He adivinado!\nGracias por jugar!");
-            alert2.showAndWait();
-        });
-        
-        no.setOnAction(event -> {
-              try {
-                  Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                  alert2.setTitle("Adivinador");
-                  alert2.setContentText("Vaya, no lo pude adivinar :c\n\n¿Podrías ayudarme a decirme qué animal pensaste?");
-                  alert2.showAndWait();
-                  Stage stage = new Stage();
-                  Parent root = FXMLLoader.load(getClass().getResource("FXMLGUINuevoNodo.fxml"));
-                  Scene scene = new Scene(root);
-                  stage.setScene(scene);
-                  stage.show();
-              } catch (IOException ex) {
-                  Logger.getLogger(FXMLGUIRespuestasController.class.getName()).log(Level.SEVERE, null, ex);
-              }
-        });
+      }
+      
+      public void setNodo(Nodo n){
+          this.nodoRespuesta = n;
+          labelTituloImagen.setText(n.getTexto());
+          imageArea.setImage(new Image("file:" + n.getImagen()));
+      }
+      
+      public void setArbol(Arbol a){
+          this.arbol = a;
+      }
+      
+      @FXML
+      public void si(ActionEvent e){
+          Alert alert = new Alert(Alert.AlertType.INFORMATION);
+          alert.setTitle("Adivinador");
+          alert.setContentText("Estuvo muy sencillo, gracias por jugar :D");
+          alert.showAndWait();
+      }
+      
+      @FXML
+      private void no(ActionEvent e) throws IOException{
+          Alert alert = new Alert(Alert.AlertType.INFORMATION);
+          alert.setTitle("Adivinador");
+          alert.setContentText("Oh, estuve muy cerca!\nAgrega el animal que pensaste...");
+          alert.showAndWait();
+          Stage old = (Stage) si.getScene().getWindow();
+          Stage nuevo = new Stage();
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUINuevoNodo.fxml"));
+          Parent root = (Parent) loader.load();
+          FXMLGUINuevoNodoController controller = loader.<FXMLGUINuevoNodoController>getController();
+          controller.setArbol(arbol);
+          System.out.println("ok");
+          Scene scene = new Scene(root);
+          nuevo.setScene(scene);
+          old.close();
+          nuevo.show();
       }
 }

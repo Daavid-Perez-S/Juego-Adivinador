@@ -47,15 +47,15 @@ public class Main extends Application {
           Archivo<Arbol> archivo= new Archivo<>(nombreArchivoDatos);
           
           File file = new File(rutaArchivo);
-          if(file.exists()){
+          if (file.exists()) {
               arbol = archivo.deserializar();
               arbol.preOrder();
-          }else{
-                  arbol.añadirPregunta("¿Es una animal doméstico?");
-                  arbol.añadirRespuesta("Perro");
-                  arbol.añadirRespuesta("Oso");
-                  archivo.crearArchivoVacio();
-                  archivo.serializar(arbol);
+          } else {
+              arbol.añadirPregunta("¿Es una animal doméstico?");
+              arbol.añadirRespuesta("Perro", "");
+              arbol.añadirRespuesta("Oso", "");
+              archivo.crearArchivoVacio();
+              archivo.serializar(arbol);
           }
           //juego(arbol.recorrerAdivinador(), arbol);
           archivo.serializar(arbol);
@@ -117,7 +117,7 @@ public class Main extends Application {
                         System.out.print(" Ingrese una característica verdadera para un(a) " + nodo.getTexto().toUpperCase()+ ", pero falsa para un " + respuestaUsuario.toUpperCase() + ": ");
                         preguntaUsuario= lecturaTeclado.nextLine();
                         arbol.añadirPregunta("¿" + preguntaUsuario + "?");
-                        arbol.añadirRespuesta(respuestaUsuario);
+                        arbol.añadirRespuesta(respuestaUsuario,"");
                         break;
                   }
             }

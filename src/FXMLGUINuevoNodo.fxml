@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="FXMLGUINuevoNodoController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLGUINuevoNodoController">
    <children>
       <Label layoutX="189.0" layoutY="29.0" text="Ups, no lo he adivinado">
          <font>
@@ -30,7 +29,7 @@
       </Label>
       <TextField fx:id="rutaDelArchivo" editable="false" layoutX="256.0" layoutY="241.0" prefHeight="25.0" prefWidth="134.0" promptText="Ruta de la imagen" />
       <Button fx:id="abrirVentana" layoutX="390.0" layoutY="241.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" text="Button" />
-      <Button fx:id="guardar" layoutX="263.0" layoutY="333.0" mnemonicParsing="false" text="Guardar">
+      <Button fx:id="guardar" layoutX="263.0" layoutY="333.0" mnemonicParsing="false" onAction="#save" text="Guardar">
          <font>
             <Font size="15.0" />
          </font>

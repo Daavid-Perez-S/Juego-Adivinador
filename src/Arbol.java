@@ -120,13 +120,13 @@ public class Arbol implements Serializable {
        * @param valor Cadena de texto a introducir.
        * @return Retorna true si la respuesta pudo ser introducida correctamente al árbol, FALSE en caso contrario.
        */
-      public boolean añadirRespuesta(String valor){         // Las respuestas siempre se añaden del lado izquierdo del nodo
+      public boolean añadirRespuesta(String valor, String ruta){         // Las respuestas siempre se añaden del lado izquierdo del nodo
             boolean bandera= true;
             try{
                   if(raiz == null){
                         System.err.println("\t[ Cree primero una pregunta ]");
                   }else{
-                        Nodo nuevo= new Nodo(valor);
+                        Nodo nuevo= new Nodo(valor,ruta);
                         if(temporalRespuesta.getDerecho() == null)
                               temporalRespuesta.setDerecho(nuevo);
                         else

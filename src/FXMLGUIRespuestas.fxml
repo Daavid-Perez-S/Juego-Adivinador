@@ -14,12 +14,12 @@
          </font>
       </Label>
       <ImageView fx:id="imageArea" fitHeight="196.0" fitWidth="262.0" layoutX="170.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="si" layoutX="120.0" layoutY="313.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" text="Sí">
+      <Button fx:id="si" layoutX="120.0" layoutY="313.0" mnemonicParsing="false" onAction="#si" prefHeight="55.0" prefWidth="100.0" text="Sí">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="no" layoutX="382.0" layoutY="313.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" text="No">
+      <Button fx:id="no" layoutX="382.0" layoutY="313.0" mnemonicParsing="false" onAction="#no" prefHeight="55.0" prefWidth="100.0" text="No">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
