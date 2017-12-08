@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="444.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLGUIBienvenidaController">
-   <children>
-      <Label layoutX="156.0" layoutY="14.0" text="Bienvenido">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="imagenPresentacion" fitHeight="200.0" fitWidth="200.0" layoutX="122.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="128.0" layoutY="275.0" text="Adivinador de Animales">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button layoutX="182.0" layoutY="331.0" mnemonicParsing="false" onAction="#jugar" prefWidth="80.0" text="Jugar">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-   </children>
-</AnchorPane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLGUIBienvenidaController">
+   <top>
+      <BorderPane prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <center>
+            <Label text="Bienvenido" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+         </center>
+      </BorderPane>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label alignment="CENTER" text="Adivinador de animales" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <ImageView fx:id="imagenPresentacion" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <BorderPane prefHeight="94.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <center>
+                  <Button mnemonicParsing="false" onAction="#jugar" text="Jugar" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Button>
+               </center>
+            </BorderPane>
+         </bottom>
+      </BorderPane>
+   </center>
+</BorderPane>

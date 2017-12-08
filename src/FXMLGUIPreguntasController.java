@@ -69,7 +69,6 @@ public class FXMLGUIPreguntasController implements Initializable {
           }
           hilo = new Hilo("Hilo Tiempo",labelTiempo);
           hilo.start();
-          nodo = arbol.recorrerAdivinador();
           mostrarPregunta();                  
       }
 
@@ -81,7 +80,6 @@ public class FXMLGUIPreguntasController implements Initializable {
             //Y el usuario si pensó en este animal, entonces se mostrará en una nueva ventana el animal adivinado
             puntosSuspensivos();
           }else{
-            nodo = arbol.recorrerAdivinador(1);
             mostrarPregunta();
           }
       }
@@ -95,7 +93,6 @@ public class FXMLGUIPreguntasController implements Initializable {
             //Una ventana para que agregue al animal
               puntosSuspensivos();
           }else{
-            nodo = arbol.recorrerAdivinador(-1);
             mostrarPregunta();
           }
       }
@@ -125,9 +122,11 @@ public class FXMLGUIPreguntasController implements Initializable {
         controller.setNodo(nodo);
         controller.setArbol(arbol);
         controller.setArchivo(archivo);
+        controller.setLabel(labelTiempo);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         setStage(stage);
+        hilo.interrupt();
         stage.show();
         /*
         Archivo<Nodo> respaldoDelNodo = new Archivo("Node.nd");
