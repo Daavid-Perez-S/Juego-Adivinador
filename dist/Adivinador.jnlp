@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Adivinador.jar" size="25881" download="eager" />
+    <jar href="Adivinador.jar" size="26852" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Adivinador" >
     <param name="requiredFXVersion" value="8.0+"/>

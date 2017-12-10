@@ -108,7 +108,7 @@ public class FXMLGUIRespuestasController implements Initializable {
         FXMLGUINuevoNodoController controller = loader.<FXMLGUINuevoNodoController>getController();
         controller.setArbol(arbol);
         controller.setArchivo(archivo);
-        System.out.println("Ventana Nuevo Nodo OK");
+        controller.setNodo(nodoRespuesta);
         Scene scene = new Scene(root);
         nuevo.setScene(scene);
         old.close();
