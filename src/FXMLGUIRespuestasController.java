@@ -72,9 +72,8 @@ public class FXMLGUIRespuestasController implements Initializable {
     @FXML
     public void si(ActionEvent e) throws IOException {
 
-        arbol.resetTemporalRecorrido();
-        archivo.serializar(arbol);
-        arbol = archivo.deserializar();
+        //arbol.resetTemporalRecorrido();
+        //arbol = archivo.deserializar();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Adivinador");
@@ -87,7 +86,12 @@ public class FXMLGUIRespuestasController implements Initializable {
         Parent root = (Parent) loader.load();
         System.out.println("Ventana Jugar OK");
         Scene scene = new Scene(root);
+        String tema;
+        URL url = getClass().getResource("Adivinador.css");
+        tema = url.toExternalForm();
+        scene.getStylesheets().add(tema);
         nuevo.setScene(scene);
+        nuevo.setResizable(false);
         setStage(nuevo);
         old.close();
         nuevo.show();
@@ -110,6 +114,11 @@ public class FXMLGUIRespuestasController implements Initializable {
         controller.setArchivo(archivo);
         controller.setNodo(nodoRespuesta);
         Scene scene = new Scene(root);
+        String tema;
+        URL url = getClass().getResource("Adivinador.css");
+        tema = url.toExternalForm();
+        scene.getStylesheets().add(tema);
+        nuevo.setResizable(false);
         nuevo.setScene(scene);
         old.close();
         nuevo.show();

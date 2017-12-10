@@ -17,7 +17,10 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="nombreNuevo" alignment="CENTER" layoutX="170.0" layoutY="97.0" prefHeight="25.0" prefWidth="265.0" promptText="Nombre del nuevo animal" />
+      <TextField fx:id="nombreNuevo" alignment="CENTER" layoutX="170.0" layoutY="97.0" prefHeight="25.0" prefWidth="265.0" promptText="Nombre del nuevo animal">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></TextField>
       <ChoiceBox fx:id="stringCaracteristcas" layoutX="128.0" layoutY="188.0" prefWidth="150.0">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -28,7 +31,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="rutaDelArchivo" alignment="CENTER" editable="false" layoutX="291.0" layoutY="251.0" prefHeight="25.0" prefWidth="242.0" promptText="Ruta de la imagen" />
+      <TextField fx:id="rutaDelArchivo" editable="false" layoutX="291.0" layoutY="251.0" prefHeight="25.0" prefWidth="242.0" promptText="Ruta de la imagen" />
       <Button fx:id="abrirVentana" layoutX="533.0" layoutY="251.0" mnemonicParsing="false" onAction="#abrirExplorador" prefHeight="25.0" prefWidth="20.0" text="Button">
          <font>
             <Font name="System Bold" size="12.0" />

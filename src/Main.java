@@ -8,6 +8,7 @@
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +24,11 @@ public class Main extends Application {
       @Override
       public void start(Stage stage) throws Exception {
             Parent root = FXMLLoader.load(getClass().getResource("FXMLGUIBienvenida.fxml"));
-            Scene scene = new Scene(root); 
+            Scene scene = new Scene(root);
+            String tema;
+            URL url = getClass().getResource("Adivinador.css");
+            tema = url.toExternalForm();
+            scene.getStylesheets().add(tema);
             stage.setScene(scene);
             stage.show();
       }

@@ -136,21 +136,13 @@ public class FXMLGUINuevoNodoController implements Initializable {
             String str = (String) stringCaracteristcas.getSelectionModel().getSelectedItem() + " " + caracteristica.getText().toLowerCase();
             formatoImagen = rutaImagen.split("\\.");
             copiador.copiarArchivo(rutaImagen, System.getProperty("user.dir") + "\\Images\\" + nombreNuevo.getText() + "." + formatoImagen[formatoImagen.length - 1]);
-
-            System.out.println("Temporal recorrido antes de añadir pregunta = " + arbol.getTemporalRecorrido());
-            arbol.añadirPregunta(str);
-            System.out.println("Temporal recorrido despues de añadir pregunta = " + arbol.getTemporalRecorrido());
-
+            arbol.añadirPregunta(str);            
             arbol.añadirRespuesta(nombreNuevo.getText(), System.getProperty("user.dir") + "\\Images\\" + nombreNuevo.getText() + "." + formatoImagen[formatoImagen.length - 1]);
-            System.out.println("Temporal recorrido despues de añadir respuesta = " + arbol.getTemporalRecorrido());
-
             Stage thisStage = (Stage) guardar.getScene().getWindow();
-            arbol.resetTemporalRecorrido();
-            System.out.println("Temp recorrido despues de resetear: " + arbol.getTemporalRecorrido());
-            archivo.serializar(arbol);
-            arbol = archivo.deserializar();
             arbol.preOrder();
-
+            arbol.resetTemporalRecorrido();
+            //arbol = archivo.deserializar();
+            archivo.serializar(arbol);
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
             alert2.setTitle("Adivinador");
             alert2.setContentText("Se ha guardado el nuevo animal ;D\n\nGracias por jugar!");
@@ -163,6 +155,11 @@ public class FXMLGUINuevoNodoController implements Initializable {
             Parent root = (Parent) loader.load();
             System.out.println("Ventana Bienvenida OK");
             Scene scene = new Scene(root);
+            String tema;
+            URL url = getClass().getResource("Adivinador.css");
+            tema = url.toExternalForm();
+            scene.getStylesheets().add(tema);
+            nuevo.setResizable(false);
             nuevo.setScene(scene);
             old.close();
             nuevo.show();

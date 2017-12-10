@@ -155,15 +155,8 @@ public class Arbol implements Serializable {
        * <p>El nodo "temporalRecorrido es igualado al nodo "raiz".<br>La variable "nivel" es igualada a 0.<br>Se resetea a como estaban al principio.</p>
        */
       public void resetTemporalRecorrido(){
-            if(temporalRecorrido != null){
-                System.out.println("******************************\nVariables antes de resetear: ");
-                System.out.println("Nodo tmp recorrido = " + temporalRecorrido.getTexto() + "\nNivel = " + nivel);
-            }
             temporalRecorrido= raiz;
             nivel= 0;
-            System.out.println("******************************\nVariables despues de resetear: ");
-            System.out.println("Nodo tmp recorrido = " + temporalRecorrido.getTexto() + "\nNivel = " + nivel);
-            System.out.println("******************************");
       }
       /**
        * <b>Imprimir el árbol en PreOrden.</b>

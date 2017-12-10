@@ -46,9 +46,13 @@ public class FXMLGUIBienvenidaController implements Initializable {
           Stage nuevo = new Stage();
           FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUIPreguntas.fxml"));
           Parent root = (Parent) loader.load();
-          System.out.println("Ventana Jugar OK");
           Scene scene = new Scene(root);
+          String tema;
+          URL url = getClass().getResource("Adivinador.css");
+          tema = url.toExternalForm();
+          scene.getStylesheets().add(tema);
           nuevo.setScene(scene);
+          nuevo.setResizable(false);
           setStage(nuevo);
           old.close();
           nuevo.show();

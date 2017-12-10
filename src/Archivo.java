@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /*
  *  Creado por: David Pérez Sánchez
  *  Matrícula: 163202
@@ -68,17 +70,19 @@ public class Archivo <T> {
       public boolean serializar(T objeto) throws FileNotFoundException{
             
             boolean bandera= true;
-            
+            ObjectOutputStream oos = null;
             if(fo == null){
-                  System.out.println("Cree otro archivo");
+                System.out.println("Cree otro archivo");
                 fo = new FileOutputStream(nombreArchivo, false);
             }
             try{
-                  ObjectOutputStream oos = new ObjectOutputStream(fo);
-                        oos.writeObject(objeto);
-                        oos.flush();
+                oos = new ObjectOutputStream(fo);
+                oos.writeObject(objeto);
+                oos.flush();
+                System.out.println("[ Serializado ] ");
             }catch (IOException e){
                   // write stack trace to standard error
+                  System.out.println(e);
                   System.err.println("\t[ El objeto no se pudo guardar ]");
                   bandera= false;
             }

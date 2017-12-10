@@ -11,6 +11,54 @@ Contacto: 163189@ids.upchiapas.edu.mx   ||  961 100 3141
     Author     : fer_i
 */
 
-root{
-    -fx-background-color: red;
+.root{
+    -fx-background-color: #3F51B5;
+}
+
+.label{
+/*    -fx-background-color: #536DFE;*/
+    -fx-padding: 5pt;
+    -fx-margin: 15pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+.button{
+    -fx-background-color: #536DFE;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 5pt;
+    -fx-background-radius: 5pt;
+}
+
+.text-field{
+    -fx-border-radius: 10pt;
+    -fx-background-radius: 10pt;
+    -fx-background-color: #C5CAE9;
+    -fx-text-fill: #212121;
+    -fx-font-size: 15;
+}
+.button:hover{
+    -fx-border-color: white;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow( three-pass-box , #303F9F , 1, 0.0 , 0 , 5 );
+}
+
+.choice-box{
+    -fx-background-color: #536DFE;
+}
+
+.choice-box .context-menu{
+    -fx-background-color: #303F9F;
+}
+
+.choice-box .menu-item > .label{
+    -fx-text-fill: #FFFFFF;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #C5CAE9; 
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: #212121; 
 }

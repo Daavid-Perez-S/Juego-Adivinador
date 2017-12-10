@@ -49,7 +49,6 @@ public class FXMLGUIPreguntasController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         System.out.println("Inicia OK");
         //Iniciar el arbol
         String nombreArchivoDatos = "Tree.tree";
@@ -59,15 +58,25 @@ public class FXMLGUIPreguntasController implements Initializable {
         File file = new File(rutaArchivo);
         if (file.exists()) {
             arbol = archivo.deserializar();
-            System.out.println("Existeee, esto hay: ");
-            arbol.preOrder();
-        } else {
-            arbol = new Arbol();
-            arbol.añadirPregunta("¿Es una animal doméstico?");
-            arbol.añadirRespuesta("Perro", System.getProperty("user.dir") + "\\Images\\" + "Perro.jpg");
-            arbol.añadirRespuesta("Oso", System.getProperty("user.dir") + "\\Images\\" + "Oso.jpg");
+            /*
+                Agregué la línea de abajo porque cuando adivinaba, al volver a
+                llamar la gui de bienvenida, mostraba un nodo erróneo.
+                --> arbol.resetTemporalRecorrido(); <--
+            */
             arbol.resetTemporalRecorrido();
-            archivo.crearArchivoVacio();
+            try{
+                System.out.println("Esto es lo que hay: ");
+                arbol.preOrder();
+                System.out.println("***********************\n\n");
+            }catch(NullPointerException exc){
+                //Cuando el archivo no se logra guardar ó el arbol es nulo,
+                //Cacho la excepción y lo obligo a crearlo sin cerrar el 
+                //programa
+                System.out.println("No deserializo :/");
+                inicializarArbol();
+            }
+        } else {
+            inicializarArbol();
         }
         hilo = new Hilo("Hilo Tiempo", labelTiempo);
         hilo.start();
@@ -112,12 +121,13 @@ public class FXMLGUIPreguntasController implements Initializable {
 
     private void mostrarRespuesta() throws IOException {
         Stage este = (Stage) botonSi.getScene().getWindow();
-
+//        archivo.serializar(arbol);
         este.setOnCloseRequest(event -> {
             hilo.interrupt();
         });
         FXMLGUIBienvenidaController.closeStage();
         Stage stage = new Stage();
+        stage.setResizable(false);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGUIRespuestas.fxml"));
         Parent root = (Parent) loader.load();
         FXMLGUIRespuestasController controller = loader.<FXMLGUIRespuestasController>getController();
@@ -126,6 +136,11 @@ public class FXMLGUIPreguntasController implements Initializable {
         controller.setArchivo(archivo);
         controller.setLabel(labelTiempo);
         Scene scene = new Scene(root);
+        String tema;
+        URL url = getClass().getResource("Adivinador.css");
+        tema = url.toExternalForm();
+        scene.getStylesheets().add(tema);
+        stage.setResizable(false);
         stage.setScene(scene);
         setStage(stage);
         hilo.interrupt();
@@ -196,5 +211,15 @@ public class FXMLGUIPreguntasController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stagee = stage;
+    }
+    
+    private void inicializarArbol(){
+        System.out.println("*** Se ha creado un nuevo arbol... ***");
+        arbol = new Arbol();
+        arbol.añadirPregunta("¿Es una animal doméstico?");
+        arbol.añadirRespuesta("Perro", System.getProperty("user.dir") + "\\Images\\" + "Perro.jpg");
+        arbol.añadirRespuesta("Oso", System.getProperty("user.dir") + "\\Images\\" + "Oso.jpg");
+        arbol.resetTemporalRecorrido();
+        archivo.crearArchivoVacio();
     }
 }
